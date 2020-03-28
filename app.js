@@ -26,7 +26,7 @@ const blogSchema = {
 const Blog = mongoose.model("Blog",blogSchema)
 
 app.get("/", function(req,res){
-  res.render("home",{homecontent : homeStartingContent, postsVal: posts});
+  res.render("home",{homecontent : homeStartingContent, postsVal: ""});
   // console.log(posts);
 })
 
@@ -48,11 +48,16 @@ app.get("/notfound",function(req,res){
 
 app.post("/compose",function(req,res){
   let inputval = req.body.textCompose;
-  var post = {
-    titlePost : req.body.titleCompose,
-    bodyPost : req.body.textCompose,
-  }
-  posts.push(post);
+  // var post = {
+  //   titlePost : req.body.titleCompose,
+  //   bodyPost : req.body.textCompose,
+  // }
+  // posts.push(post);
+  const postNew = new Blog({
+    title:req.body.titleCompose,
+    body:req.body.textCompose
+  })
+  postNew.save();
   res.redirect("/");
 })
 
